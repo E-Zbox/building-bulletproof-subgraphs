@@ -1,0 +1,93 @@
+type User @entity {
+  # id => address
+  id: Bytes!
+  # array of approvals made as owner
+  approvalsAsOwner: [Approval!]! @derivedFrom(field: "owner")
+  # total LP tokens approved as owner
+  approvalsAsOwnerTotal: BigInt!
+  # array of approvals as spender
+  approvalsAsSpender: [Approval!]! @derivedFrom(field: "spender")
+  # total LP tokens approved as spender
+  approvalsAsSpenderTotal: BigInt!
+  # LP tokens balance
+  balance: BigInt!
+  # array of swapped tokens received
+  swaps_received: [Swap!]! @derivedFrom(field: "to")
+  # array of swapped tokens sent
+  swaps_sent: [Swap!]! @derivedFrom(field: "sender")
+  # array of transferred tx as from
+  transfers_made: [Transfer!]! @derivedFrom(field: "from")
+  # array of transferred tx as to
+  transfers_received: [Transfer!]! @derivedFrom(field: "to")
+}
+
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  # owner => User.id
+  owner: User!
+  # spender => User.id
+  spender: User!
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Burn @entity(immutable: true) {
+  id: Bytes!
+  sender: Bytes! # address
+  amount0: BigInt! # uint256
+  amount1: BigInt! # uint256
+  to: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Mint @entity(immutable: true) {
+  id: Bytes!
+  sender: Bytes! # address
+  amount0: BigInt! # uint256
+  amount1: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Swap @entity(immutable: true) {
+  id: Bytes!
+  # sender => User.id
+  sender: User!
+  amount0In: BigInt! # uint256
+  amount1In: BigInt! # uint256
+  amount0Out: BigInt! # uint256
+  amount1Out: BigInt! # uint256
+  # to => User.id
+  to: User!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Sync @entity(immutable: true) {
+  id: Bytes!
+  reserve0: BigInt! # uint112
+  reserve1: BigInt! # uint112
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  # tx hash
+  id: Bytes!
+  # from => User.id
+  from: User!
+  # to => User.id
+  to: User!
+  # number of tokens transferred
+  value: BigInt!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

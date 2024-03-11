@@ -1,0 +1,8 @@
+{
+  "mainnet": {
+    "UniswapV2Pair": {
+      "address": "0xCE84867c3c02B05dc570d0135103d3fB9CC19433",
+      "startBlock": 10736320
+    }
+  }
+}
