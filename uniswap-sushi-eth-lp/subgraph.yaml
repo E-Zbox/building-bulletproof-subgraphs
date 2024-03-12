@@ -22,6 +22,7 @@ dataSources:
         - Swap
         - Sync
         - Transfer
+        - User
       abis:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
