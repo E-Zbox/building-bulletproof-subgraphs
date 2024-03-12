@@ -124,6 +124,7 @@ export function handleTransfer(event: TransferEvent): void {
 
   // populating user entities
   const senderUserEntity = createOrLoadUserEntity(event.params.from);
+  // zero address - address(0) would always hava a balance of 0
   if (senderUserEntity.id != new Bytes(0)) {
     senderUserEntity.balance = senderUserEntity.balance.minus(
       event.params.value
@@ -133,6 +134,7 @@ export function handleTransfer(event: TransferEvent): void {
   senderUserEntity.save();
 
   const receiverUserEntity = createOrLoadUserEntity(event.params.to);
+  // zero address - address(0) would always hava a balance of 0
   if (receiverUserEntity.id != new Bytes(0)) {
     receiverUserEntity.balance = receiverUserEntity.balance.plus(
       event.params.value
