@@ -1,5 +1,7 @@
 # Building Bulletproof Subgraphs
 
+[![article-banner](./screenshots/the-graph-medium-matchstick-article.png)](https://ceocodes.medium.com/building-bulletproof-subgraphs-unit-testing-with-matchstick-f39610c778b3)
+
 ## Description
 
 This repository is for an [article](https://ceocodes.medium.com/building-bulletproof-subgraphs-unit-testing-with-matchstick-f39610c778b3) guiding users on developing robust and bug-free subgraphs leveraging the [Matchstick Unit Testing framework](https://github.com/LimeChain/matchstick).
