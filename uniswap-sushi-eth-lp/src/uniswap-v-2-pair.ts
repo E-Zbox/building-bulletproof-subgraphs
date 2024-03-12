@@ -1,3 +1,4 @@
+import { Bytes } from "@graphprotocol/graph-ts";
 import {
   Approval as ApprovalEvent,
   Burn as BurnEvent,
@@ -36,12 +37,14 @@ export function handleApproval(event: ApprovalEvent): void {
 
   // populating user entities
   const ownerUserEntity = createOrLoadUserEntity(event.params.owner);
-  ownerUserEntity.approvalsAsOwnerTotal.plus(event.params.value);
+  ownerUserEntity.approvalsAsOwnerTotal =
+    ownerUserEntity.approvalsAsOwnerTotal.plus(event.params.value);
 
   ownerUserEntity.save();
 
   const spenderUserEntity = createOrLoadUserEntity(event.params.spender);
-  spenderUserEntity.approvalsAsSpenderTotal.plus(event.params.value);
+  spenderUserEntity.approvalsAsSpenderTotal =
+    spenderUserEntity.approvalsAsSpenderTotal.plus(event.params.value);
 
   spenderUserEntity.save();
 }
@@ -121,12 +124,20 @@ export function handleTransfer(event: TransferEvent): void {
 
   // populating user entities
   const senderUserEntity = createOrLoadUserEntity(event.params.from);
-  senderUserEntity.balance.minus(event.params.value);
+  if (senderUserEntity.id != new Bytes(0)) {
+    senderUserEntity.balance = senderUserEntity.balance.minus(
+      event.params.value
+    );
+  }
 
   senderUserEntity.save();
 
   const receiverUserEntity = createOrLoadUserEntity(event.params.to);
-  receiverUserEntity.balance.plus(event.params.value);
+  if (receiverUserEntity.id != new Bytes(0)) {
+    receiverUserEntity.balance = receiverUserEntity.balance.plus(
+      event.params.value
+    );
+  }
 
   receiverUserEntity.save();
 }
